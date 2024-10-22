@@ -1,6 +1,9 @@
+import { useRef } from "react";
 
+const Form = ({ add }) => {
+    const contentRef = useRef();
+    const nameRef = useRef();
 
-const Form = () => {
   return (
     <div>
       <form style={{
@@ -11,9 +14,16 @@ const Form = () => {
         marginBottom: 20,
         borderRadius: 8,
         background: "#def",
-      }}>
-        <input type="text" placeholder="Content" style={{ padding: 5 }} />
-        <input type="text" placeholder="Name" style={{ padding: 5 }} />
+      }} onSubmit={e => {
+        e.preventDefault();
+        const content = contentRef.current.value;
+        const name = nameRef.current.value;
+        add(content, name);
+        console.log(content, name, "hellow");
+        e.currentTarget.reset();
+      } }>
+        <input ref={contentRef} type="text" placeholder="Content" style={{ padding: 5 }} />
+        <input ref={nameRef} type="text" placeholder="Name" style={{ padding: 5 }} />
         <button
           type="submit"
           style={{
