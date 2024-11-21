@@ -22,6 +22,10 @@ import Profile from "./pages/Profile";
 import Comments from "./pages/Comments";
 import Likes from "./pages/Likes";
 
+import { QueryClient, QueryClientProvider} from "react-query";
+
+export const queryClient = new QueryClient();
+
 
  const AppContext = createContext();
 
@@ -97,7 +101,10 @@ export default function ThemedApp(){
           setGlobalMsg,
         }}
       >
-        <RouterProvider router={router} />
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+
         <CssBaseline />
       </AppContext.Provider>
     </ThemeProvider>

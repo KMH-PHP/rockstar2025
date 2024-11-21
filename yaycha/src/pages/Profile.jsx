@@ -1,9 +1,27 @@
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, Typography, Alert } from "@mui/material";
 import { pink } from "@mui/material/colors";
 
 import Item from "../components/Item";
+import { useParams } from "react-router-dom";
+import { fetchUser } from "../libs/fatcher";
+import { useQuery } from "react-query";
 
 export default function Profile() {
+    const {id} = useParams;
+
+    const {data, isLoading, isError, error } = useQuery(
+        `user/${id}`, async () => fetchUser(id)
+    );
+    if (isError) {
+      return (
+        <Box>
+          <Alert severity="warning">{error.message}</Alert>
+        </Box>
+      );
+    }
+    if (isLoading) {
+      return <Box sx={{ textAlign: "center" }}>Loading...</Box>;
+    }
     return(
         <Box>
             <Box sx={{ bgcolor: "banner", height: 150, borderRadius: 4 }}></Box>
